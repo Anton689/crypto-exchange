@@ -1,0 +1,12 @@
+@import "fonts";
+@import "variables";
+
+html, body {
+  font-family: $ff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
