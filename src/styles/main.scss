@@ -1,7 +1,9 @@
 @import "fonts";
 @import "variables";
+@import "mixins";
 
-html, body {
+body {
+  height: 100%;
   font-family: $ff;
 }
 
@@ -9,4 +11,8 @@ html, body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+h1,h3 {
+  color: $title-color;
 }
