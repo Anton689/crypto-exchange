@@ -11,7 +11,9 @@ module.exports = {
     parser: '@babel/eslint-parser'
   },
   rules: {
-    'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off'
+    'no-console': 'warn',
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+    quotes: ['error', 'single'],
+    'vue/html-quotes': ['error', 'single', { avoidEscape: false }]
   }
 }

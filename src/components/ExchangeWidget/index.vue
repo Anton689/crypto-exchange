@@ -1,19 +1,20 @@
 <template>
-  <div class="wrapper">
-    <header class="header">
-      <h1 class="header__mainTitle">Crypto Exchange</h1>
-      <h3 class="header__subTitle">Exchange fast and easy</h3>
+  <div class='wrapper'>
+    <header class='header'>
+      <h1 class='header__mainTitle'>Crypto Exchange</h1>
+      <h3 class='header__subTitle'>Exchange fast and easy</h3>
     </header>
-    <section class="content">
-      <div class="content__inputs">
-        <input class="inputOne" type="text">
-        <input class="inputTwo" type="text">
+    <section class='content'>
+      <div class='content__inputs'>
+        <currency-input/>
+        <img class='inputsSwap' src='../../assets/swap.svg' alt='ss'>
+        <dropdown-item/>
       </div>
-      <div class="content__footer">
-        <span class="footerTitle">Your Ethereum address</span>
-        <div class="footerAddress">
-          <input class="inputThree" type="text">
-          <button-item :name="'EXCHANGE'"/>
+      <div class='content__footer'>
+        <span class='footerTitle'>Your Ethereum address</span>
+        <div class='footerAddress'>
+          <input-item/>
+          <button-item :name='"EXCHANGE"'/>
         </div>
       </div>
     </section>
@@ -21,24 +22,38 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   name: 'ExchangeWidget',
   components: {
-    ButtonItem: () => import('@/components/Button')
+    ButtonItem: () => import('@/components/Button'),
+    CurrencyInput: () => import('@/components/CurrencyInput'),
+    InputItem: () => import('@/components/Input'),
+    DropdownItem: () => import('@/components/DropdownMenu')
+  },
+  created () {
+    this.getCurrencies()
+      .then(res => {
+        console.log(res)
+      })
+  },
+  methods: {
+    ...mapActions({ getCurrencies: 'exchanger/fetchCurrencies' })
   }
 }
+
 </script>
 
 <style lang="scss" scoped>
-@import "@/styles/mixins.scss";
+@import '@/styles/mixins.scss';
 
 .wrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border: 1px solid black;
-  width: 100%;
-  padding: 0 220px 0 220px;
+  //border: 1px solid black;
+  padding: 0 16px;
 }
 
 .header {
@@ -57,16 +72,9 @@ export default {
   flex-direction: column;
   &__inputs {
     display: flex;
-    .inputOne {
-      margin-right: 60px;
-      max-width: 450px;
-      width: 100%;
-      height: 50px;
-    }
-    .inputTwo {
-      max-width: 450px;
-      width: 100%;
-      height: 50px;
+    width: 100%;
+    .inputsSwap {
+      margin: 0 27px;
     }
   }
   &__footer {
@@ -78,15 +86,10 @@ export default {
       display: block;
     }
     .footerAddress{
+      margin-top: 8px;
       display: flex;
       width: 100%;
     }
   }
 }
-
-.inputThree {
-    width: 100%;
-    max-width: 725px;
-    height: 50px;
-  }
 </style>

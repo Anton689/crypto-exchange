@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id='app'>
     <exchange-widget/>
   </div>
 </template>
@@ -21,5 +21,6 @@ export default {
   justify-content: center;
   align-items: center;
   margin-top: 223px;
+  width: 100%;
 }
 </style>
