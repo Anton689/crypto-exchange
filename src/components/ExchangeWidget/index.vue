@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <header class="header">
-      <h1 class="header__firstTitle">Crypto Exchange</h1>
+      <h1 class="header__mainTitle">Crypto Exchange</h1>
       <h3 class="header__subTitle">Exchange fast and easy</h3>
     </header>
     <section class="content">
@@ -42,7 +42,7 @@ export default {
 }
 
 .header {
-  &__firstTitle {
+  &__mainTitle {
     @include font-style(50px,60px,300);
   }
   &__subTitle {
