@@ -61,7 +61,14 @@ export default {
 
 .wrapper {
   position: relative;
+  width: 100%;
   min-width: 440px;
+  height: 50px;
+  @media(max-width: 470px){
+    width: 100%;
+    min-width: 0;
+    max-width: 440px;
+  }
 }
 
 .search {
@@ -73,6 +80,7 @@ export default {
   border-bottom: none;
   background: #F6F7F8;
   min-height: 50px;
+
   &__inner{
     display: flex;
     align-items: center;
@@ -103,13 +111,14 @@ export default {
 }
 
 .dropdown {
+  z-index: 100;
   position: absolute;
   margin-top: 13px;
   width: 100%;
-  top: 35px;
-  height: 200px;
+  top: 34px;
+  height: 150px;
   background: #F6F7F8;
-  border-top: 1px solid #E3EBEF;;
+  border-top: 1px solid #E3EBEF;
   border-bottom: 1px;
   border-bottom-style: solid;
   border-left: 1px solid #C1D9E6;
@@ -118,6 +127,7 @@ export default {
   border-bottom-right-radius: 5px;
   border-bottom-color: #C1D9E6;
   overflow: auto;
+
   :hover {
     background-color: #EAF1F7;
     cursor: pointer;

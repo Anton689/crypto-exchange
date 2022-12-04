@@ -50,6 +50,12 @@ export default {
     background-color: #0095E0;
     cursor: pointer;
   }
+  @media(max-width: 970px){
+    margin-left: 0;
+    margin-top: 16px;
+    max-width: 723px;
+
+  }
 
 }
 
@@ -64,6 +70,11 @@ export default {
   background-color: rgb(158, 13, 42);
   color: #FFFF;
   padding: 15px 59px;
+  @media(max-width: 970px){
+    margin-left: 0;
+    margin-top: 16px;
+    max-width: 723px;
+  }
 }
 
 </style>

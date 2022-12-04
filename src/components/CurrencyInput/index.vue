@@ -46,7 +46,7 @@ export default {
         return this.inputDirection === FROM ? this.minimalExchangeAmount : this.estimateExchangeAmount
       },
       set (newValue) {
-        if (+newValue < this.minimalExchangeAmount) {
+        if (+newValue < this.minimalExchangeAmount && this.inputDirection === FROM) {
           this.SET_ESTIMATE_AMOUNT('-')
           this.SET_ERROR(true)
         } else if (+newValue && this.inputDirection === FROM) {

@@ -4,6 +4,7 @@
       <h1 class='header__mainTitle'>Crypto Exchange</h1>
       <h3 class='header__subTitle'>Exchange fast and easy</h3>
     </header>
+
     <section class='content'>
       <div class='content__inputs'>
         <currencies-controller :inputDirection='inputFrom'/>
@@ -14,6 +15,7 @@
           @click='swapCurrencies'>
         <currencies-controller :inputDirection='inputTo'/>
       </div>
+
       <div class='content__footer'>
         <span class='footerTitle'>Your Ethereum address</span>
         <div class='footerAddress'>
@@ -24,6 +26,7 @@
         <span v-if='isPairError' class='error'>This pair is disabled now</span>
       </div>
     </section>
+
   </div>
 </template>
 
@@ -78,11 +81,17 @@ export default {
   flex-direction: column;
   justify-content: center;
   padding: 0 16px;
+  @media(max-width: 470px){
+    width: 100%;
+  }
 }
 
 .header {
   &__mainTitle {
     @include font-style(50px,60px,300);
+    @media(max-width: 470px){
+      font-size: 40px;
+    }
   }
   &__subTitle {
     @include font-style(20px,20px,400);
@@ -97,8 +106,18 @@ export default {
   &__inputs {
     display: flex;
     width: 100%;
+    @media(max-width: 970px){
+      flex-direction: column;
+    }
     .inputsSwap {
       margin: 0 27px;
+      @media(max-width: 970px){
+        width: 24px;
+        height: 24px;
+        align-self: flex-end;
+        transform: rotate(90deg);
+        margin: 16px;
+      }
     }
   }
   &__footer {
@@ -113,6 +132,9 @@ export default {
       margin-top: 8px;
       display: flex;
       width: 100%;
+      @media(max-width: 970px){
+        flex-direction: column;
+      }
     }
   }
 }
