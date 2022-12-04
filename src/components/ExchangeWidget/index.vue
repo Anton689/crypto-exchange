@@ -6,9 +6,9 @@
     </header>
     <section class='content'>
       <div class='content__inputs'>
-        <currency-input/>
+        <currencies-controller :inputDirection='inputFrom'/>
         <img class='inputsSwap' src='../../assets/swap.svg' alt='ss'>
-        <dropdown-item/>
+        <currencies-controller :inputDirection='inputTo'/>
       </div>
       <div class='content__footer'>
         <span class='footerTitle'>Your Ethereum address</span>
@@ -22,24 +22,33 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
 
 export default {
   name: 'ExchangeWidget',
   components: {
     ButtonItem: () => import('@/components/Button'),
-    CurrencyInput: () => import('@/components/CurrencyInput'),
     InputItem: () => import('@/components/Input'),
-    DropdownItem: () => import('@/components/DropdownMenu')
+    CurrenciesController: () => import('@/components/CurrenciesController')
   },
-  created () {
-    this.getCurrencies()
-      .then(res => {
-        console.log(res)
-      })
+  data () {
+    return {
+      selectedTickerFrom: {
+        ticker: null,
+        image: null
+      },
+      selectedTickerTo: {
+        ticker: null,
+        image: null
+      }
+    }
   },
-  methods: {
-    ...mapActions({ getCurrencies: 'exchanger/fetchCurrencies' })
+  computed: {
+    inputFrom () {
+      return 'from'
+    },
+    inputTo () {
+      return 'to'
+    }
   }
 }
 

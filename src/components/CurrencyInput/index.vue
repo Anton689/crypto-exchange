@@ -1,18 +1,82 @@
 <template>
   <div class='block'>
-    <input class='inputCur' type='number'>
+    <input
+      v-else
+      class='inputCur'
+      type='text'
+      :value='inputDirection === "from" ? minimalExchangeAmount : estimateExchangeAmount'
+      @keypress='numberValidation($event)'
+    >
     <div class='border'/>
-    <div class='info'>
-        <img class='imgCur' src='../../assets/btcsvg.svg' alt=':('>
-        <span class='currName'>BTC</span>
-        <div class='arrow'/>
+    <div class='info' @click.stop='onClickHandler'>
+        <img
+          class='imgCur'
+          :src='inputDirection === "from" ? currencyFrom.image : currencyTo.image'
+          alt=':('>
+        <span class='currName'>{{ inputDirection === "from" ? currencyFrom.ticker : currencyTo.ticker }}</span>
+        <img class='arrow' src='../../assets/ArrowDowns.svg'/>
     </div>
   </div>
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex'
+
 export default {
-  name: 'CurrencyInput'
+  name: 'CurrencyInput',
+  props: {
+    selectedTicker: {
+      type: Object,
+      default () {
+        return {}
+      }
+    },
+    inputDirection: {
+      type: String
+    }
+  },
+  data () {
+    return {
+      amount: null
+    }
+  },
+  computed: {
+    ...mapState({
+      currencyTo: state => state.exchanger.currencyTo,
+      currencyFrom: state => state.exchanger.currencyFrom,
+      minimalExchangeAmount: state => state.exchanger.minimalExchangeAmount,
+      estimateExchangeAmount: state => state.exchanger.estimatedExchangeAmount
+    })
+  },
+  methods: {
+    ...mapActions({
+      setAmount: 'exchanger/fetchEstimateAmount'
+    }),
+    onClickHandler () {
+      this.$emit('openDropdownHandle')
+    },
+    setValue () {
+      if (this.inputDirection === 'from' && !this.amount) {
+        this.amount = this.minimalExchangeAmount
+      }
+      if (this.inputDirection !== 'from') {
+        this.amount = this.estimateExchangeAmount
+      }
+      // return this.inputDirection === 'from' ? this.minimalExchangeAmount : this.estimateExchangeAmount
+    },
+    onChangeHandle (amount) {
+      console.log(amount)
+      this.setAmount(amount)
+    },
+    numberValidation (e) {
+      const keysAllowed = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.']
+      const keyPressed = e.key
+
+      if (!keysAllowed.includes(keyPressed)) {
+        e.preventDefault()
+      }
+    }
+  }
 }
 </script>
 
@@ -39,7 +103,8 @@ export default {
   display: flex;
   align-items: center;
   width: 159px;
-  padding-left: 36px;
+  padding-left: 16px;
+  padding-right: 5px;
 }
 
 .border {
@@ -49,10 +114,9 @@ export default {
 }
 
 .arrow {
-  margin: 0 8px 0 30px;
+  margin-left: 5px;
   width: 16px;
   height: 16px;
-  background-image: url('@/assets/ArrowDowns.svg');
 
 }
 
@@ -61,10 +125,16 @@ export default {
 }
 
 .currName {
+  min-width: 60px;
   font-size: 16px;
   line-height: 23px;
   margin-left: 12px;
   color: #282828;
+}
+
+.imgCur {
+  width: 20px;
+  height: 20px;
 }
 
 </style>

@@ -6,10 +6,18 @@
 
 <script>
 
+import { mapActions } from 'vuex'
+
 export default {
   name: 'App',
   components: {
     ExchangeWidget: () => import('@/components/ExchangeWidget')
+  },
+  created () {
+    this.getCurrencies()
+  },
+  methods: {
+    ...mapActions({ getCurrencies: 'exchanger/fetchCurrencies' })
   }
 
 }

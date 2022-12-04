@@ -4,36 +4,20 @@
     <div class='block'>
       <div class='inputBlock'>
         <input placeholder='Search' class='input' type='text'>
-        <div class='cancel'/>
+        <div class='cancel' @click='closeDropdownHandler'/>
       </div>
 
     </div>
 
     <div class='dropdown'>
-      <div class='dropdownItem'>
-        <img class='logo' src='../../assets/btcsvg.svg'>
-        <div class='cutName'>BTC</div>
-        <div class='title'>Bitcoin</div>
-      </div>
-      <div class='dropdownItem'>
-        <img class='logo' src='../../assets/btcsvg.svg'>
-        <div class='cutName'>BTC</div>
-        <div class='title'>Bitcoin</div>
-      </div>
-      <div class='dropdownItem'>
-        <img class='logo' src='../../assets/btcsvg.svg'>
-        <div class='cutName'>BTC</div>
-        <div class='title'>Bitcoin</div>
-      </div>
-      <div class='dropdownItem'>
-        <img class='logo' src='../../assets/btcsvg.svg'>
-        <div class='cutName'>BTC</div>
-        <div class='title'>Bitcoin</div>
-      </div>
-      <div class='dropdownItem'>
-        <img class='logo' src='../../assets/btcsvg.svg'>
-        <div class='cutName'>BTC</div>
-        <div class='title'>Bitcoin</div>
+      <div
+        v-for='(currency, index) in currenciesList'
+        :key='index'
+        class='dropdownItem'
+        @click='clickHandler(currency)'>
+        <img class='logo' :src='currency.image' alt=':('>
+        <div class='ticker'>{{ currency.ticker }}</div>
+        <div class='title'>{{currency.name}}</div>
       </div>
     </div>
 
@@ -41,8 +25,23 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
-  name: 'DropdownItem'
+  name: 'DropdownItem',
+  computed: {
+    ...mapState({
+      currenciesList: state => state.exchanger.currenciesList
+    })
+  },
+  methods: {
+    clickHandler (currencyItem) {
+      this.$emit('chooseTickerHandle', currencyItem)
+    },
+    closeDropdownHandler () {
+      this.$emit('closeDropdownHandle')
+    }
+  }
 }
 </script>
 
@@ -139,7 +138,7 @@ export default {
   height: 20px;
 }
 
-.cutName {
+.ticker {
   margin-left: 12px;
 }
 
