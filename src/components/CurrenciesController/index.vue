@@ -15,26 +15,14 @@
 <script>
 import { mapActions, mapMutations } from 'vuex'
 import { SET_FROM, SET_TO } from '@/store/mutationTypes'
+import { FROM } from '@/constants/currencyAmount'
 
 export default {
   name: 'CurrenciesController',
   props: {
-    selectedTickerFrom: {
-      type: Object,
-      default () {
-        return {}
-      }
-    },
-    selectedTickerTo: {
-      type: Object,
-      default () {
-        return {}
-      }
-    },
     inputDirection: {
       type: String
     }
-
   },
   components: {
     CurrencyInput: () => import('@/components/CurrencyInput'),
@@ -45,11 +33,9 @@ export default {
       isDropdownOpen: false
     }
   },
-  computed: {
 
-  },
   methods: {
-    ...mapMutations('exchanger', [SET_TO, SET_FROM]),
+    ...mapMutations('exchanger', [SET_FROM, SET_TO]),
     ...mapActions({
       getMinAmount: 'exchanger/fetchMinAmount',
       getEstimateAmount: 'exchanger/fetchEstimateAmount'
@@ -57,14 +43,12 @@ export default {
 
     chooseTickerHandle (currencyItem) {
       const { ticker, image } = currencyItem
-      if (this.inputDirection === 'from') {
+      if (this.inputDirection === FROM) {
         this.SET_FROM({ ticker, image })
         this.getMinAmount()
-        this.getEstimateAmount()
       } else {
         this.SET_TO({ ticker, image })
         this.getMinAmount()
-        this.getEstimateAmount()
       }
       this.isDropdownOpen = false
     },
@@ -77,7 +61,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-
-</style>

@@ -7,7 +7,11 @@
     <section class='content'>
       <div class='content__inputs'>
         <currencies-controller :inputDirection='inputFrom'/>
-        <img class='inputsSwap' src='../../assets/swap.svg' alt='ss'>
+        <img
+          class='inputsSwap'
+          src='../../assets/swap.svg'
+          alt=':('
+          @click='swapCurrencies'>
         <currencies-controller :inputDirection='inputTo'/>
       </div>
       <div class='content__footer'>
@@ -16,12 +20,18 @@
           <input-item/>
           <button-item :name='"EXCHANGE"'/>
         </div>
+        <span v-if='isError && !isPairError' class='error'>Amount less then min</span>
+        <span v-if='isPairError' class='error'>This pair is disabled now</span>
       </div>
     </section>
   </div>
 </template>
 
 <script>
+
+import { mapActions, mapMutations, mapState } from 'vuex'
+import { FROM, TO } from '@/constants/currencyAmount'
+import { SWAP_CURRENCIES } from '@/store/mutationTypes'
 
 export default {
   name: 'ExchangeWidget',
@@ -32,22 +42,28 @@ export default {
   },
   data () {
     return {
-      selectedTickerFrom: {
-        ticker: null,
-        image: null
-      },
-      selectedTickerTo: {
-        ticker: null,
-        image: null
-      }
+      inputFrom: FROM,
+      inputTo: TO
+
     }
   },
   computed: {
-    inputFrom () {
-      return 'from'
-    },
-    inputTo () {
-      return 'to'
+    ...mapState({
+      isError: state => state.exchanger.isError,
+      isPairError: state => state.exchanger.isPairError
+    })
+  },
+  created () {
+    this.getMinAmount()
+  },
+  methods: {
+    ...mapMutations('exchanger', [SWAP_CURRENCIES]),
+    ...mapActions({
+      getMinAmount: 'exchanger/fetchMinAmount'
+    }),
+    swapCurrencies () {
+      this.SWAP_CURRENCIES()
+      this.getMinAmount()
     }
   }
 }
@@ -61,7 +77,6 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  //border: 1px solid black;
   padding: 0 16px;
 }
 
@@ -100,5 +115,11 @@ export default {
       width: 100%;
     }
   }
+}
+
+.error{
+  align-self: flex-end;
+  margin-right: 35px;
+  color: #E03F3F;
 }
 </style>

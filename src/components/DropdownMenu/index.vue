@@ -1,10 +1,13 @@
 <template>
-  <div class='wrapper1'>
+  <div class='wrapper'>
 
-    <div class='block'>
-      <div class='inputBlock'>
-        <input placeholder='Search' class='input' type='text'>
-        <div class='cancel' @click='closeDropdownHandler'/>
+    <div class='search'>
+      <div class='search__inner'>
+        <input
+          placeholder='Search'
+          class='innerInput'
+          type='text'>
+        <div class='innerClose' @click='closeDropdownHandler'/>
       </div>
 
     </div>
@@ -13,11 +16,16 @@
       <div
         v-for='(currency, index) in currenciesList'
         :key='index'
-        class='dropdownItem'
+        class='dropdown__dropdownItem'
         @click='clickHandler(currency)'>
-        <img class='logo' :src='currency.image' alt=':('>
-        <div class='ticker'>{{ currency.ticker }}</div>
-        <div class='title'>{{currency.name}}</div>
+        <img
+          v-if='currency.image'
+          class='dropdownItemLogo'
+          :src='currency.image'
+          alt=':('>
+        <div v-else class='logoCap'/>
+        <div class='dropdownItemTicker'>{{ currency.ticker.toUpperCase() }}</div>
+        <div class='dropdownItemTitle'>{{currency.name}}</div>
       </div>
     </div>
 
@@ -26,8 +34,12 @@
 
 <script>
 import { mapState } from 'vuex'
+import closeOutside from '@/mixin/closeOutside'
 
 export default {
+  mixins: [
+    closeOutside
+  ],
   name: 'DropdownItem',
   computed: {
     ...mapState({
@@ -47,12 +59,12 @@ export default {
 
 <style lang="scss" scoped>
 
-.wrapper1 {
+.wrapper {
   position: relative;
   min-width: 440px;
 }
 
-.block {
+.search {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -61,21 +73,27 @@ export default {
   border-bottom: none;
   background: #F6F7F8;
   min-height: 50px;
-}
-
-.inputBlock{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  height: 50px;
-}
-.input{
-  width: 100%;
-  background: #F6F7F8;
-  padding-left: 16px;
-  outline: none;
-  border: none;
+  &__inner{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 50px;
+    .innerInput{
+      width: 100%;
+      background: #F6F7F8;
+      padding-left: 16px;
+      outline: none;
+      border: none;
+    }
+    .innerClose{
+      margin-right: 16px;
+      margin-left: 5px;
+      width: 16px;
+      height: 16px;
+      background-image: url('@/assets/Close.svg');
+    }
+  }
 }
 
 ::placeholder {
@@ -84,13 +102,6 @@ export default {
   line-height: 23px;
 }
 
-.cancel{
-  margin-right: 16px;
-  margin-left: 5px;
-  width: 16px;
-  height: 16px;
-  background-image: url('@/assets/Close.svg');
-}
 .dropdown {
   position: absolute;
   margin-top: 13px;
@@ -119,7 +130,7 @@ export default {
   }
 }
 
-.dropdownItem {
+.dropdown__dropdownItem {
   display: flex;
   align-items: center;
   width: 100%;
@@ -131,22 +142,24 @@ export default {
     background-color: #EAF1F7;
     cursor: pointer;
   }
+  .dropdownItemLogo {
+    width: 20px;
+    height: 20px;
+  }
+  .dropdownItemTicker {
+    margin-left: 12px;
+  }
+  .dropdownItemTitle {
+    margin-left: 16px;
+    font-size: 16px;
+    line-height: 23px;
+    color: #80A2B6;
+  }
 }
 
-.logo {
+.logoCap {
   width: 20px;
   height: 20px;
-}
-
-.ticker {
-  margin-left: 12px;
-}
-
-.title {
-  margin-left: 16px;
-  font-size: 16px;
-  line-height: 23px;
-  color: #80A2B6;
 }
 
 </style>
