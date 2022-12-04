@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunkcrypto_exchange"]=self["webpackChunkcrypto_exchange"]||[]).push([[416],{416:function(t,e,n){n.r(e),n.d(e,{default:function(){return f}});var u=function(){var t=this,e=t._self._c;return e("input",{staticClass:"input",attrs:{type:"text"}})},a=[],c={name:"InputItem"},r=c,s=n(1001),p=(0,s.Z)(r,u,a,!1,null,"15f7fa9e",null),f=p.exports}}]);
+//# sourceMappingURL=416.5a58ca3b.js.map
